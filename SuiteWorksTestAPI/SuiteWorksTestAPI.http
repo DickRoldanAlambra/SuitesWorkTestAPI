@@ -1,0 +1,6 @@
+@SuiteWorksTestAPI_HostAddress = http://localhost:5189
+
+GET {{SuiteWorksTestAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
