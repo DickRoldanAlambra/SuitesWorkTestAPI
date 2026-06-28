@@ -29,6 +29,21 @@ public class PositionsController : ControllerBase
 
         return Ok(positions);
     }
+    [HttpGet("active")]
+    public async Task<ActionResult<IEnumerable<PositionResponseDTO>>> GetActivePositions()
+    {
+        var positions = await _context.Positions.Where(p => p.IsActive).Select(p => new PositionResponseDTO
+        {
+            Id = p.Id,
+            PositionName = p.PositionName,
+            Description = p.Description,
+            IsActive = p.IsActive,
+            DateCreated = p.DateCreated,
+        }).ToListAsync();
+
+        return Ok(positions);
+    }
+
 
     [HttpGet("{id}")]
     public async Task<ActionResult<PositionResponseDTO>> GetPosition(int id)

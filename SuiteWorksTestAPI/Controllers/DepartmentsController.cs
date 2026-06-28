@@ -30,6 +30,21 @@ public class DepartmentsController : ControllerBase
         return Ok(departments);
     }
 
+    [HttpGet("active")]
+    public async Task<ActionResult<IEnumerable<DepartmentResponseDTO>>> GetActiveDepartments()
+    {
+        var departments = await _context.Departments.Where(d => d.IsActive).Select(d => new DepartmentResponseDTO
+        {
+            Id = d.Id,
+            DepartmentName = d.DepartmentName,
+            Description = d.Description,
+            IsActive = d.IsActive,
+            DateCreated = d.DateCreated,
+        }).ToListAsync();
+
+        return Ok(departments);
+    }
+
     [HttpGet("{id}")]
     public async Task<ActionResult<DepartmentResponseDTO>> GetDepartment(int id)
     {
